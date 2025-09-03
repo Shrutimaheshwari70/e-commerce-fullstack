@@ -6,18 +6,46 @@
     padding: 20px;
    font-size: 25px;
    font-family:sans-serif;
+   box-shadow: 0 1px 3px -1px rgb(146, 138, 138);
  }
  .left,.right,.center{
     display: flex;
-  
+  cursor:auto;
     justify-content: space-around;
+ }
+ .left{
+    font-weight: 600;
  }
  .center{
     width: 45%;
+
  }
  .right{
     width: 10%;
+   
  }
  button{
     font-size: 25px;
+     cursor: pointer;
+ }
+ 
+
+ sup{
+       height: 15px;
+    width: 15px;
+    display: inline-block;
+    font-size: 12px;
+    position: relative;
+    bottom: 10px;
+    right: 8px;
+    color: white;
+    background: red;
+ text-align: center;
+    border-radius: 50%;
+    padding: 1px;
+ }
+
+ .active{
+
+    color: red;
  }
