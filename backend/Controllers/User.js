@@ -32,7 +32,7 @@ if(!token) res.status(404).send("please login first to continue ")
 const decodedUser= jwt.verify(token, process.env.secret_key)
 const user=await  User.findById(decodedUser.id).select("-password");
 if(!user)return  res.send("invalid token!!")
-res.json({
+res.status(200).json({
     user
 })
 }
