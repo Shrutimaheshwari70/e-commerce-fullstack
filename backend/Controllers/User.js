@@ -63,3 +63,14 @@ res.status(200).json({
     user
 })
 }
+
+export async function logout(req, res) {
+  try {
+    
+    res.clearCookie("token");
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong", error: error.message });
+  }
+}
