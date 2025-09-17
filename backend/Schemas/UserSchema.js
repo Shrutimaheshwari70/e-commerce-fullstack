@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import validator from "validator"
+
  const UserSchema= new Schema({
     firstName:{
 type:String,
@@ -19,6 +19,9 @@ required:[true , "name is required"]
    
         required: [true, "please enter a password "],
         minlength: [9, "Password must be at least 9 characters long"]
+    },
+    picture:{
+        type: String
     }
  })
 

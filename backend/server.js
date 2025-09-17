@@ -9,7 +9,8 @@ import cookieParser from "cookie-parser";
  connection(process.env.mongodb_uri)
  const app= express()
  app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "http://localhost:5174",
+  //allowing only my frontend 
   credentials: true
 }))
  app.use(cookieParser())

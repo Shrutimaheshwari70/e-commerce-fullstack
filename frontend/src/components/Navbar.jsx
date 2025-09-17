@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { TiShoppingCart } from "react-icons/ti";
 import { CgProfile } from "react-icons/cg";
 import "../stylesheets/Navbar.css"
@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {useSelector} from "react-redux"
 export default function Navbar() {
     const location = useLocation()
-const cartCount=     useSelector(state=>state.cart.productCount)
+const cartCount=  useSelector(state=>state.cart.productCount)
   return (
     <div className='navbar-container'>
         <div className="left">
@@ -43,3 +43,5 @@ const cartCount=     useSelector(state=>state.cart.productCount)
     </div>
   )
 }
+
+// localhost:5173/

@@ -3,18 +3,22 @@
 
 import { useEffect, useState } from "react";
 import "../stylesheets/Profile.css";
+import { MdCameraEnhance } from "react-icons/md";
 
+import { FaUser } from "react-icons/fa";
 function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [form, setForm] = useState({ firstName: "", lastName: "", userName: "", password: "" });
+  const [form, setForm] = useState({ firstName: "", lastName: "", userName: "", password: "" , picture:""});
   const [loading, setLoading] = useState(false);
   const [showSignup, setShowSignup] = useState(true);
 
-
+const [attempts, setAttempts] = useState(0);
+const [lockTime, setLockTime] = useState(null);
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // check krra h ki logged in h ya nhi
   useEffect(() => {
     async function checkLogin() {
       let res = await fetch("http://localhost:3000/user/getProfile", {
@@ -36,27 +40,39 @@ function Profile() {
       alert("Please enter a strong password before signing up!");
       return;
     }
-
-    const res = await fetch("http://localhost:3000/user/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(form),
-    });
-
-    if (res.status === 201) {
-      let data = await res.json();
-      alert(data.message);
-
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setShowSignup(false);
-      }, 2000);
-    } else {
-      let data = await res.json();
-      console.log(data);
+  const formData = new FormData();
+    formData.append("firstName", form.firstName);
+    formData.append("lastName", form.lastName);
+    formData.append("userName", form.userName);
+    formData.append("password", form.password);
+    if (form.picture) {
+      formData.append("picture", form.picture); // file append
     }
+  try {
+      const res = await fetch("http://localhost:3000/user/signup", {
+        method: "POST",
+       
+        credentials: "include",
+        body: formData,
+      });
+      const data = await res.json(); 
+      if (res.status === 201) {
+  
+  
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setShowSignup(false);
+                alert(data.message || "Signup successful!");
+        }, 2000);
+      } else {
+        
+    alert(data.error || data.message || "signup failed")
+      }
+  } catch (error) {
+        console.error(error);
+    alert("Something went wrong. Please check your connection.");
+  }
   };
 
   const validatePassword = (value) => {
@@ -69,6 +85,10 @@ function Profile() {
   };
 
   const handleLogin = async () => {
+     if (lockTime && Date.now() - lockTime < 2 * 60 * 1000) {
+    alert("Too many failed attempts. Please try again after 2 minutes.");
+    return;
+  }
     const res = await fetch("http://localhost:3000/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -79,7 +99,22 @@ function Profile() {
 
     if (res.ok) {
       setIsLoggedIn(true);
-      setLoggedInUser(data.user);
+       setAttempts(0);
+         const profileRes = await fetch("http://localhost:3000/user/getProfile", {
+      method: "GET",
+      credentials: "include",
+    });
+    const profileData = await profileRes.json();
+      setLoggedInUser(profileData.user);
+    }
+    else{
+        setAttempts(prev => prev + 1);
+        if(attempts+1 >=3){
+              setLockTime(Date.now());   
+      alert("Too many failed attempts! Try again in 2 minutes.");
+      return;
+        }
+      alert(data.error|| "login failed")
     }
   };
 
@@ -91,7 +126,7 @@ function Profile() {
     if (res.ok) {
       setIsLoggedIn(false);
       setLoggedInUser(null);
-      setForm({ firstName: "", lastName: "", userName: "", password: "" });
+      setForm({ firstName: "", lastName: "", userName: "", password: "" ,picture:null});
       setShowSignup(true);
     }
   };
@@ -100,19 +135,13 @@ function Profile() {
     return (
       <div className="auth-page">
         <div className="auth-card">
-          <div className="brand-panel">
-            <div className="brand-logo"><span className="dot" /> SHOP HERE</div>
-            <div className="brand-hero">Premium Streetwear · New Season Drop</div>
-            <div className="brand-sub small-muted">
-              Quality fabrics. Responsible stitching. Wear the story — curated for urban comfort.
-            </div>
-          </div>
+
 
           <div className="auth-panel">
             {loading ? (
               <>
                 <div className="small-muted">⏳ Creating your account...</div>
-                <div className="loader"><i /></div>
+                <div className="loader"><i/></div>
               </>
             ) : (
               <>
@@ -155,7 +184,14 @@ function Profile() {
                           {passwordError}
                         </p>
                       )}
-
+                      <div className="profile-pic">
+     <label htmlFor="">Profile-:</label>
+<input type="file" name="" id="" onChange={e => {
+                            setForm({ ...form, picture: e.target.files[0] });
+    
+                          }}/>
+                      </div>
+                 
                       <button className="btn btn-primary" onClick={handleSignup}>Signup</button>
                     </div>
                   </div>
@@ -168,7 +204,7 @@ function Profile() {
                   <div className="form-grid">
                     <input className="input" placeholder="Username" onChange={e => setForm({ ...form, userName: e.target.value })} />
 
-                    {/* Password with toggle (login) */}
+                
                     <div style={{ position: "relative" }}>
                       <input
                         className="input"
@@ -206,24 +242,30 @@ function Profile() {
 
 
   return (
-    <div className="auth-page center">
-      <div className="auth-card" style={{ maxWidth: 640 }}>
-        <div className="brand-panel">
-          <div className="brand-logo"><span className="dot" /> TAILS EMPIRE</div>
-        </div>
+   
 
-        <div className="auth-panel">
-          <div className="welcome-card">
-            <h2>Welcome {loggedInUser?.firstName} {loggedInUser?.lastName}</h2>
-            <p className="small-muted">Username: {loggedInUser?.userName}</p>
-            <div style={{ marginTop: 12 }}>
-              <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
-            </div>
-          </div>
+      <div className="auth-page">
+    <div className="profile-card">
+      <div className="welcome-card">
+        <div className="picture-div">
+          <FaUser />
+      <img src={loggedInUser?.picture} alt="" className="picture"/>
+        <button className="edit-icon">
+          <MdCameraEnhance />
+        </button>
+        </div>
+  
+        <h2>Welcome {loggedInUser?.firstName} {loggedInUser?.lastName}</h2>
+        <p className="small-muted">Username: {loggedInUser?.userName}</p>
+        <div style={{ marginTop: 12 }}>
+          <button className="btn btn-primary" onClick={handleLogout}>Logout</button>
         </div>
       </div>
     </div>
+  </div>
   );
 }
 
 export default Profile;
+
+

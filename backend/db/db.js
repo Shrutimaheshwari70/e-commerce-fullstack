@@ -6,6 +6,9 @@ const connection=(uri)=>{
         console.log("mongodb connected ");
         
     })
+    .catch((error)=>{
+        console.log("connection error:", error.message);
+    })
 }
 
-export default connection
+export default connection 

@@ -27,6 +27,19 @@
   overflow: hidden;
 
 }
+.profile-card {
+  max-width: 480px;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 .auth-card {
@@ -120,8 +133,18 @@ text-align: center;
   border-color: rgba(255,107,107,0.9);
   box-shadow: 0 6px 20px rgba(255,107,107,0.06);
 }
-
-
+.profile-pic{
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+  padding: 20px;
+}
+.picture{
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  background-color: rgb(202, 193, 193);
+}
 .btn {
 
  width: 100%;
@@ -199,4 +222,42 @@ text-align: center;
 }
 
 .small-muted { color: var(--muted); font-size:13px; }
-.center { text-align:center; }
+.center { 
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+ }
+
+ .welcome-card{
+  text-align: center;
+ }
+.picture-div {
+  width: 252px;
+  height: 252px;
+  position: relative;
+  display: inline-block;
+  border-radius: 50%; 
+overflow: visible;
+}
+.picture-div {
+  scrollbar-width: none;
+}
+
+.picture-div img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 200px; 
+  right: 100px; 
+overflow: visible;
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 30px;
+}

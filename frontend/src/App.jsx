@@ -9,7 +9,7 @@ import Shop from './components/Shop.jsx'
 import Profile from './components/Profile.jsx'
 export default function App() {
   return (
-    <div>
+    <>
       <Navbar/>
       <Routes>
            <Route  path='/'  element={<Shop/>}/>
@@ -19,6 +19,11 @@ export default function App() {
                     <Route  path='/Shop'  element={<Shop/>}/>
                     <Route path='/profile' element={<Profile/>}/>
       </Routes>
-    </div>
+    </>
   )
 }
+
+
+// npm i react-redux redux react-router-dom react-icons 
+
+// store , initialState, reducerfn , constants 
