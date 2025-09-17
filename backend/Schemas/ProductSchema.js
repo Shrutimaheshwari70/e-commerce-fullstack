@@ -12,7 +12,7 @@ import {model, Schema} from "mongoose"
         min:0
     },
     productImage:{
-        type:String,
+        type:[String],
         required:true
     },
     productCount:{

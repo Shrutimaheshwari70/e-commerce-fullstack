@@ -17,16 +17,14 @@ try {
     
      try {
     
-         let imageUrl = "";
-         if(req.file){
-             const result = await cloudinary.uploader.upload(req.file.path, {
-                    folder: "uploads",
-                  });
-
-                    imageUrl = result.secure_url;
-
-                          fs.unlinkSync(req.file.path);
-         }
+         let imageUrl = [];
+        if(req.files) {
+  for(const file of req.files){
+    const result = await cloudinary.uploader.upload(file.path, { folder: "uploads" });
+    imageUrl.push(result.secure_url);
+    fs.unlinkSync(file.path);
+  }
+}
     const newProduct = new products({
            productName: req.body.productName,
       productPrice: Number(req.body.productPrice),
@@ -42,3 +40,42 @@ try {
     res.status(400).json({ error: err.message || "Failed to add product" });
   }
  }
+
+ export async function updateProduct(req, res) {
+  try {
+    const { id } = req.params; 
+    const updatedData = req.body;
+
+
+    const updatedProduct = await products.findByIdAndUpdate(
+      id,
+      updatedData,
+      { new: true } 
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update product" });
+  }
+}
+
+export async function deleteProduct(req,res){
+  try {
+    const { id } = req.params; 
+    const deletedProduct = await products.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete product" });
+  }
+} 

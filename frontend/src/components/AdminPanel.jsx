@@ -6,7 +6,7 @@ function AdminPanel() {
     name: "",
     price: "",
     description: "",
-    image: null,
+    image: [],
     count: 0,
     category: "Men",
   });
@@ -26,7 +26,7 @@ function AdminPanel() {
   }, []);
 
   const handleAdd = async () => {
-    if (!newProduct.image) {
+    if ( newProduct.image.length==0) {
       alert("Please select an image!");
       return;
     }
@@ -36,9 +36,11 @@ function AdminPanel() {
     formData.append("productPrice", newProduct.price);
     formData.append("description", newProduct.description);
     formData.append("productCategory", newProduct.category);
-    formData.append("image", newProduct.image);
-    formData.append("productCount", newProduct.count);
 
+    formData.append("productCount", newProduct.count);
+  newProduct.image.forEach((img, idx) => {
+    formData.append("image", img); 
+  });
     try {
       const res = await fetch("http://localhost:3000/products/add-product", {
         method: "POST",
@@ -50,7 +52,7 @@ function AdminPanel() {
           name: "",
           price: "",
           description: "",
-          image: null,
+          image: [],
           count: 0,
           category: "Men",
         });
@@ -65,8 +67,8 @@ function AdminPanel() {
 
   const handleUpdate = async (id, updatedProduct) => {
     try {
-      const res = await fetch(`http://localhost:3000/products/${id}`, {
-        method: "PUT",
+      const res = await fetch(`http://localhost:3000/products/update-product/${id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedProduct),
       });
@@ -79,7 +81,7 @@ function AdminPanel() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/products/${id}`, {
+      const res = await fetch(`http://localhost:3000/products/delete-product/${id}`, {
         method: "DELETE",
       });
       if (res.ok) fetchProducts();
@@ -171,13 +173,14 @@ function AdminPanel() {
             </tr>
           )}
 
-          {/* Add new product row */}
+
           <tr>
             <td>
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setNewProduct({ ...newProduct, image: e.target.files[0] })}
+                multiple
+                onChange={(e) => setNewProduct({ ...newProduct, image:Array.from(e.target.files) })}
               />
             </td>
             <td>
