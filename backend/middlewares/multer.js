@@ -22,7 +22,7 @@ const upload = multer({
     }
 });
 
-// Error handling middleware
+
 export const handleMulterError = (error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         if (error.code === 'LIMIT_FILE_SIZE') {

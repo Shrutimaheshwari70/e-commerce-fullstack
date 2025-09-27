@@ -116,6 +116,8 @@ const [lockTime, setLockTime] = useState(null);
     }
     else{
         setAttempts(prev => prev + 1);
+        //0
+        //1
         if(attempts+1 >=3){
               setLockTime(Date.now());   
       alert("Too many failed attempts! Try again in 2 minutes.");
@@ -276,3 +278,10 @@ const [lockTime, setLockTime] = useState(null);
 export default Profile;
 
 
+
+//0
+//  useEffect(()=>{
+//   setCount(count+1)
+//   console.log(count);
+  
+//  })

@@ -5,7 +5,7 @@ import validator from "validator";
 import cloudinary from "../config/cloudinary.js";
 import fs from "fs";
 export async function signup(req, res) {
-  const { firstName, lastName, userName, password, picture } = req.body;
+  const { firstName, lastName, userName, password } = req.body;
 
   try {
     if (!password) {
@@ -26,7 +26,10 @@ export async function signup(req, res) {
       });
       pictureUrl = result.secure_url;
 
-      fs.unlinkSync(req.file.path);
+      fs.unlink(req.file.path, (err)=>{
+          console.log(err);
+
+      });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 

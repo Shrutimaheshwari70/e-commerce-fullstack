@@ -10,7 +10,7 @@ import productsRouter from "./Routers/Products.js"
  connection(process.env.mongodb_uri)
  const app= express()
  app.use(cors({
-  origin: "http://localhost:5174",
+  origin: "http://localhost:5173",
   //allowing only my frontend 
   credentials: true
 }))

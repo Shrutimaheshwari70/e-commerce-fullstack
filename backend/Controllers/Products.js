@@ -5,6 +5,7 @@ import cloudinary from "../config/cloudinary.js";
 export async function getProduct(req,res){
 try {
    const product= await products.find()
+   //puri product collection 
    res.json(product)
 } catch (error) {
    res.status(500).json({
@@ -14,6 +15,7 @@ try {
  }
 
  export async function addProduct(req,res){
+    console.log(req.files);
     
      try {
     
