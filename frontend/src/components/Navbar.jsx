@@ -16,13 +16,13 @@ const cartCount=  useSelector(state=>state.cart.productCount)
         <Link to="/shop">
          <button className={location.pathname === "/shop" ? "active" : ""}>Shop</button>
         </Link> 
-        <Link to="/men">
+        <Link to="/shop/men">
          <button className={location.pathname === "/men" ? "active" : ""}>Men</button>
         </Link>  
-           <Link to="/women">
+           <Link to="/shop/women">
             <button className={location.pathname === "/women" ? "active" : ""}>Women</button>
            </Link>
-           <Link to="/kids">
+           <Link to="/shop/kids">
                   <button className={location.pathname === "/kids" ? "active" : ""}>Kids</button>
            </Link>
      
