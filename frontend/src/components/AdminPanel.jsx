@@ -15,7 +15,7 @@ function AdminPanel() {
     try {
       const res = await fetch("http://localhost:3000/products");
       const data = await res.json();
-      setProducts(Array.isArray(data) ? data : []);
+      setProducts(Array.isArray(data.products) ? data.products : []);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
