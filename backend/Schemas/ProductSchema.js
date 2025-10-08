@@ -9,7 +9,7 @@ const productSchema = new Schema({
   productCount: Number
 }, { timestamps: true });
 
-// Important: model name "Product" hona chahiye
+
 const Product = model("Product", productSchema);
 
 export default Product;

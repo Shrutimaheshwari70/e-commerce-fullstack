@@ -25,12 +25,12 @@ import Productcontext from './context'
 }, []);
 
    return (
-     <div>
+
         <Productcontext.Provider value={{values,setValues}}>
 
             {children}
         </Productcontext.Provider>
-     </div>
+
    )
  }
  

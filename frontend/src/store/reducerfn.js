@@ -9,7 +9,7 @@ const reducerfn = (state = initialState, action) => {
         user: {
           id: action.payload.id,
           name: action.payload.name,
-          email: action.payload.email,
+          userName: action.payload.userName,
         },
       };
 
@@ -39,10 +39,11 @@ const reducerfn = (state = initialState, action) => {
         newProducts = [...state.cart.products, { ...action.payload, qty: 1 }];
       }
 
+      
       const totalPrice = newProducts.reduce(
         (sum, p) => sum + p.price * (p.qty || 1),
-        0
-      );
+    );
+
       const totalShipping = newProducts.reduce(
         (sum, p) => sum + (p.shipping || 0),
         0

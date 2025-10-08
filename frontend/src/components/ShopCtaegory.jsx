@@ -23,14 +23,14 @@ export default function ShopCategory() {
           setUser({
             id: data.user._id,
             name: data.user.firstName + " " + data.user.lastName,
-            email: data.user.email,
+            userName: data.user.userName,
           });
           dispatch({
             type: "set-user",
             payload: {
               id: data.user._id,
               name: data.user.firstName + " " + data.user.lastName,
-              email: data.user.email,
+              userName: data.user.userName,
             },
           });
         } else setUser(null);
@@ -40,20 +40,49 @@ export default function ShopCategory() {
       }
     };
     checkLogin();
-  }, [dispatch]);
+  }, []);
 
   const filteredProducts = values.filter(
     (product) => product.productCategory.toLowerCase() === category.toLowerCase()
   );
 
-  const addToCart = async (product) => {
-    if (!user?.id) {
-      alert("Please login to add items to the cart!");
+
+const addToCart = async (product) => {
+  if (!user?.id) {
+    alert("Please login to add items to the cart!");
+    return;
+  }
+
+
+  if (product.productCount <= 0) {
+    alert("This product is out of stock!");
+    return;
+  }
+
+  const shippingCost = product.productPrice >= 1000 ? 0 : 50;
+
+  try {
+    const res = await fetch("http://localhost:3000/cart/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        userId: user.id,
+        productId: product._id,
+        price: product.productPrice,
+        shipping: shippingCost,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+    
+      alert(data.error || "Failed to add to cart!");
       return;
     }
 
-    const shippingCost = product.productPrice >= 1000 ? 0 : 50;
-
+ 
     dispatch({
       type: "product-add",
       payload: {
@@ -64,23 +93,15 @@ export default function ShopCategory() {
       },
     });
 
-    try {
-      const res = await fetch("http://localhost:3000/cart/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          userId: user.id,
-          productId: product._id,
-          price: product.productPrice,
-          shipping: shippingCost,
-        }),
-      });
-      if (!res.ok) console.error("Failed to add to cart on backend");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+
+    product.productCount -= 1;
+    alert("Item added to cart successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong while adding to cart!");
+  }
+};
+
 
   return (
     <div style={{ padding: "20px" }}>
