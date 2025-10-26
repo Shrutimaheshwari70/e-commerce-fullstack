@@ -5,7 +5,7 @@ const otpSchema = new Schema({
   otp: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
   verified: { type: Boolean, default: false },
-  expiresAt: { type: Date, required: true },
+  expiresAt: { type: Date, required: true }, // time btana ki is time otp invalid 
 }, { timestamps: true });
 
 

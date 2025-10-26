@@ -44,13 +44,13 @@ export async function addAddress(req, res) {
       city,
       state,
       zipCode,
-      country: country || "India",
-      isDefault: isDefault || false,
+      country: country ,
+      isDefault: isDefault 
     });
 
     await address.save();
 
-    // Delete used OTP
+    
     await OTP.deleteMany({ userId, phone });
 
     res.status(201).json({ message: "Address added successfully", address });

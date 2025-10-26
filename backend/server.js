@@ -12,10 +12,7 @@ import addressRouter from "./Routers/Address.js"
 import otpRouter from "./Routers/Otp.js"
  dotenv.config()
  
- // Debug: Check if environment variables are loading
- console.log("🔍 ENV CHECK:");
- console.log("- PORT:", process.env.PORT ? "✓ Loaded" : "✗ Missing");
- console.log("- FAST2SMS_API_KEY:", process.env.FAST2SMS_API_KEY ? "✓ Loaded (length: " + process.env.FAST2SMS_API_KEY.length + ")" : "✗ Missing");
+
  
  connection(process.env.mongodb_uri)
  const app= express()

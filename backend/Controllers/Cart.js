@@ -1,5 +1,6 @@
 import Cart from "../Schemas/Cart.js";
 import Product from "../Schemas/ProductSchema.js";
+import User from "../Schemas/UserSchema.js";
 
 export const addToCart = async (req, res) => {
   const userId = req.user?._id;
@@ -22,7 +23,7 @@ export const addToCart = async (req, res) => {
     if (productDoc.productCount <= 0) {
       return res.status(400).json({ error: "Product is out of stock" });
     }
-
+let user= await User.findById(userId)
     let cart = await Cart.findOne({ userId });
     if (!cart) {
       cart = new Cart({
@@ -30,12 +31,15 @@ export const addToCart = async (req, res) => {
         products: [],
         totalPrice: 0,
         totalShipping: 0,
+        itemsAdded:0
       });
     }
 
     const existingProduct = cart.products.find(
       (p) => p.item.toString() === productId
     );
+let newCount= itemsAdded+1
+user.Cartvalue +=1 
 
     if (existingProduct) {
       if (existingProduct.qty + 1 > productDoc.productCount) {
@@ -50,6 +54,7 @@ export const addToCart = async (req, res) => {
         price,
         shipping,
         qty: 1,
+        itemsAdded : newCount
       });
     }
 
@@ -59,6 +64,7 @@ export const addToCart = async (req, res) => {
     );
     cart.totalShipping = cart.products.reduce((sum, p) => sum + p.shipping, 0);
 
+await user.save()
     await cart.save();
 
     res.status(200).json({ message: "Product added to cart", cart });
