@@ -8,7 +8,7 @@ import "../stylesheets/Navbar.css";
 export default function Navbar() {
   const location = useLocation();
   const dispatch = useDispatch();
-
+ let isAdding = useSelector(state=>state.isProductAdd)
   const [userName, setUserName] = useState("");
 const [cart, setCart]= useState(0)
   useEffect(() => {
@@ -32,6 +32,13 @@ const [cart, setCart]= useState(0)
               email: data.user.email,
             },
           });
+
+          dispatch({
+            type:"productAdd",
+            payload:{
+              isAdding: false
+            }
+          })
         } else {
           setUserName("");
         }
@@ -42,7 +49,7 @@ const [cart, setCart]= useState(0)
     };
 
     fetchUser();
-  }, [dispatch]);
+  }, [ isAdding]);
 
   return (
     <div className='navbar-container'>

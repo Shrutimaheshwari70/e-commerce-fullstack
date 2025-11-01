@@ -62,7 +62,10 @@ const reducerfn = (state = initialState, action) => {
 ...state,
 isAdmin: action.payload
        }
-
+case "productAdd" :return{
+  ...state,
+  isProductAdd:action.payload.isAdding
+}
     default:
       return state;
   }

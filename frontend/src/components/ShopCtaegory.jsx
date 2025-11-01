@@ -93,6 +93,13 @@ const addToCart = async (product) => {
       },
     });
 
+    dispatch({
+      type:"productAdd",
+      payload:{
+        isAdding:true
+      }
+    })
+
     alert("Item added to cart successfully!");
   } catch (err) {
     console.error(err);

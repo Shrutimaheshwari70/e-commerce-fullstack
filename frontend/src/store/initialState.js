@@ -10,7 +10,8 @@ const initialState = {
     name: "",
     userName: "",
   },
-  isAdmin: false 
+  isAdmin: false ,
+  isProductAdd : false
 };
 
 export default initialState;
