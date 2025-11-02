@@ -9,6 +9,7 @@ export default function Navbar() {
   const location = useLocation();
   const dispatch = useDispatch();
  let status = useSelector(state=>state.isProductAdd)
+
   const [userName, setUserName] = useState("");
 const [cartt, setCart]= useState(0)
   useEffect(() => {
@@ -27,7 +28,7 @@ const [cartt, setCart]= useState(0)
         setCart(data.user.Cartvalue)
         if (res.ok && data.user) {
           const name = data.user.firstName + " " + data.user.lastName;
-
+setUserName(name)
           dispatch({
             type: "set-user",
             payload: {
@@ -67,7 +68,14 @@ const [cartt, setCart]= useState(0)
       <div className="right">
         <Link to="/cart">
           <button className={location.pathname==="/cart"?"active":""}>
-            <TiShoppingCart /><sup>{cartt }</sup>
+            <TiShoppingCart /><sup>
+              {
+                userName== "" ? 0 :
+                cartt
+
+              }
+              
+              </sup>
           </button>
         </Link>
         <Link to="/profile">

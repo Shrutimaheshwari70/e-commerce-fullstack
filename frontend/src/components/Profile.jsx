@@ -210,6 +210,13 @@ function Profile() {
           type: "user-login",
           payload: { id: null, name: "", email: "" },
         });
+
+         dispatch({
+          type:"productAdd",
+          payload:{
+        isAdding:true
+      }
+         })
       }
     } catch (err) {
       console.error(err);
