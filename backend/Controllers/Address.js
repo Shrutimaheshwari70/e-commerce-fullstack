@@ -24,7 +24,7 @@ export async function addAddress(req, res) {
       userId,
       phone,
       verified: true,
-      expiresAt: { $gt: new Date() }
+     
     }); //otp
 
     if (!verifiedOTP) {
