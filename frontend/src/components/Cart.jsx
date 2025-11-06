@@ -158,6 +158,7 @@ export default function Cart() {
       alert("Something went wrong!");
     } finally {
       setVerifyingOtp(false);
+      
     }
   };
 
@@ -210,6 +211,9 @@ export default function Cart() {
     } catch (err) {
       console.error(err);
       alert("Something went wrong!");
+    }
+    finally{
+      setOtpVerified(false)
     }
   
   };
