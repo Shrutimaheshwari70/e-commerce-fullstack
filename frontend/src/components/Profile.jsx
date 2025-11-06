@@ -38,7 +38,7 @@ function Profile() {
   useEffect(() => {
     async function checkLogin() {
       try {
-        const res = await fetch("http://localhost:3000/user/getProfile", {
+        const res = await fetch("https://e-com-project-msn4.onrender.com/user/getProfile", {
           method: "GET",
           credentials: "include",
         });
@@ -90,7 +90,7 @@ function Profile() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/user/signup", {
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/signup", {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -129,7 +129,7 @@ function Profile() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/user/login", {
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -154,7 +154,7 @@ function Profile() {
         }
 
         const profileRes = await fetch(
-          "http://localhost:3000/user/getProfile",
+          "https://e-com-project-msn4.onrender.com/user/getProfile",
           {
             method: "GET",
             credentials: "include",
@@ -198,7 +198,7 @@ function Profile() {
   
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:3000/user/logout", {
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -242,7 +242,7 @@ function Profile() {
     if (editForm.picture) updatedForm.append("picture", editForm.picture);
 
     try {
-      const res = await fetch("http://localhost:3000/user/updateProfile", {
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/updateProfile", {
         method: "PUT",
         credentials: "include",
         body: updatedForm,
