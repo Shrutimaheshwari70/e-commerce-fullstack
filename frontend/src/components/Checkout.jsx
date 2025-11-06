@@ -47,6 +47,7 @@ export default function Checkout() {
           totalAmount: cart.totalPrice + cart.totalShipping,
           deliveryAddress: selectedAddress,
           paymentMode,
+          customerNumber: customerNumber.toString(),
         }),
       });
 
