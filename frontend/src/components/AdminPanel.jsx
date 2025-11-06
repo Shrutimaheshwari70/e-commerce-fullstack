@@ -257,7 +257,7 @@ dispatch({
        
           <tr>
             <td>
-              <div>
+              {/* <div>
                 <label>Image 1:</label>
                 <input
                   type="file"
@@ -266,8 +266,8 @@ dispatch({
                     setNewProduct({ ...newProduct, image: [e.target.files[0], newProduct.image[1]] })
                   }
                 />
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <label>Image 2:</label>
                 <input
                   type="file"
@@ -276,7 +276,35 @@ dispatch({
                     setNewProduct({ ...newProduct, image: [newProduct.image[0], e.target.files[0]] })
                   }
                 />
-              </div>
+              </div> */}
+
+              <div>
+  <label>Change Image 1:</label>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setUpdatedImages((prev) => ({
+        ...prev,
+        [p._id]: [e.target.files[0], prev[p._id]?.[1] || null],
+      }))
+    }
+  />
+</div>
+<div>
+  <label>Change Image 2:</label>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setUpdatedImages((prev) => ({
+        ...prev,
+        [p._id]: [prev[p._id]?.[0] || null, e.target.files[0]],
+      }))
+    }
+  />
+</div>
+
             </td>
             <td><input type="text" placeholder="Name" value={newProduct.name} onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })} /></td>
             <td><input type="number" placeholder="Price" value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} /></td>

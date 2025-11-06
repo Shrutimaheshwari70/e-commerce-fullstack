@@ -1,6 +1,3 @@
-
-
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -19,12 +16,20 @@ connection(process.env.mongodb_uri);
 
 const app = express();
 
-// ✅ Proper CORS config:
+// // ✅ Proper CORS config:
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // frontend origin
+//     credentials: true, // allow cookies
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 app.use(
   cors({
     origin: "http://localhost:5173", // frontend origin
     credentials: true, // allow cookies
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // ✅ added PATCH here
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
