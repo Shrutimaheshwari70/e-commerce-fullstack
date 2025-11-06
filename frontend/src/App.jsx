@@ -6,7 +6,7 @@ import Navbar from './components/Navbar.jsx'
 import Profile from './components/Profile.jsx'
 import Shop from './components/Shop.jsx'
 import AdminPanel from "./components/AdminPanel";
-import ContextProvider from "./Context/contextProvider.jsx";
+import ContextProvider from "./Context/ContextProvider.jsx"
 import ShopCtaegory from "./components/ShopCtaegory.jsx";
 import Cart from "./components/Cart.jsx";
 import Orders from "./components/Orders.jsx";
