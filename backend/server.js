@@ -21,12 +21,12 @@ const app = express();
 
 // ✅ Proper CORS config:
 app.use(
-cors({
-origin: "https://e-com-project-msn4.onrender.com", // frontend origin
-credentials: true, // allow cookies
-methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-allowedHeaders: ["Content-Type", "Authorization"],
-})
+  cors({
+    origin: "https://e-com-project-1-db0p.onrender.com", // frontend origin
+    credentials: true, // allow cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 
 app.use(cookieParser());
