@@ -132,7 +132,13 @@ export async function getProfile(req, res) {
 
 export async function logout(req, res) {
   try {
-    res.clearCookie("token");
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None"
+});
+return res.json({ message: "Logged out" });
+
 
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
