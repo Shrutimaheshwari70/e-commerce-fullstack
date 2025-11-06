@@ -22,7 +22,7 @@ const app = express();
 // ✅ Proper CORS config:
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend origin
+    origin: "https://e-com-project-msn4.onrender.com", // frontend origin
     credentials: true, // allow cookies
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
