@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
@@ -218,7 +220,7 @@ export default function Cart() {
   
   };
 
-  async function proceedToCheckout() {
+  function proceedToCheckout() {
     if (cart.products.length === 0) {
       alert("Your cart is empty!");
       return;
@@ -229,50 +231,7 @@ export default function Cart() {
       return;
     }
 
-    const confirmCheckout = window.confirm(
-      `Total Amount: ₹${cart.totalPrice + cart.totalShipping}\n\nDeliver to: ${
-        selectedAddress.fullName
-      }, ${selectedAddress.city}\n\nProceed to checkout?`
-    );
-
-    if (!confirmCheckout) return;
-
-    setLoading(true);
-
-    try {
-      const products = cart.products.map((p) => ({
-        productId: p.item._id,
-        qty: p.qty,
-      }));
-
-      const res = await fetch("https://e-com-project-msn4.onrender.com/order/addOrder", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          products,
-          totalAmount: cart.totalPrice + cart.totalShipping,
-          deliveryAddress: selectedAddress,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Order placed successfully! 🎉");
-        dispatch({
-          type: "set-cart",
-          payload: { products: [], totalPrice: 0, totalShipping: 0 },
-        });
-      } else {
-        alert(data.message || "Failed to place order");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong while placing order!");
-    } finally {
-      setLoading(false);
-    }
+    navigate("/checkout", { state: { cart, selectedAddress } });
   }
 
   return (

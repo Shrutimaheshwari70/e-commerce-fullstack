@@ -15,6 +15,7 @@ const OrderSchema = new Schema(
       },
     ],
     totalAmount: { type: Number, required: true },
+    paymentMode: { type: String, required: true, enum: ["cod", "online"] },
     deliveryAddress: {
       fullName: { type: String, required: true },
       phone: { type: String, required: true },

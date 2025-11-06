@@ -10,7 +10,7 @@ export async function addOrder(req, res) {
 
     const decoded = jwt.verify(token, process.env.secret_key);
 
-    const { products, totalAmount, deliveryAddress } = req.body;
+    const { products, totalAmount, deliveryAddress, paymentMode } = req.body;
 
     if (!deliveryAddress) {
       return res.status(400).json({ message: "Delivery address is required" });
@@ -38,6 +38,7 @@ export async function addOrder(req, res) {
       userId: decoded.id,
       products,
       totalAmount,
+      paymentMode,
       deliveryAddress,
     });
 
