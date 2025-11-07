@@ -41,20 +41,24 @@ let user= await User.findById(userId)
 
 
     if (existingProduct) {
-    if (existingProduct.qty + 1 > productDoc.productCount) {
-    return res
-    .status(400)
-    .json({ error: "Not enough stock available to add more" });
-    }
-    existingProduct.qty += 1;
+      if (existingProduct.qty + 1 > productDoc.productCount) {
+        return res
+          .status(400)
+          .json({ error: "Not enough stock available to add more" });
+      }
+      existingProduct.qty += 1;
     } else {
-    cart.products.push({
-    item: productId,
-    price,
-    shipping,
-    qty: 1,
-
-    });
+      cart.products.push({
+        item: productId,
+        price,
+        shipping,
+        qty: 1,
+     
+      });
+      cart.itemsAdded +=1
+      
+      let newCart= user.Cartvalue+1
+   await User.findOneAndUpdate({_id:userId}, {Cartvalue:newCart })
     }
 
     cart.totalPrice = cart.products.reduce(
@@ -63,9 +67,7 @@ let user= await User.findById(userId)
     );
     cart.totalShipping = cart.products.reduce((sum, p) => sum + p.shipping, 0);
 
-    const totalQty = cart.products.reduce((sum, p) => sum + p.qty, 0);
-    await User.findByIdAndUpdate(userId, { Cartvalue: totalQty });
-
+await user.save()
     await cart.save();
 
     res.status(200).json({ message: "Product added to cart", cart });
@@ -140,13 +142,10 @@ export const updateCart = async (req, res) => {
     }
 
     cart.totalPrice = cart.products.reduce(
-    (sum, p) => sum + p.price * p.qty,
-    0
+      (sum, p) => sum + p.price * p.qty,
+      0
     );
     cart.totalShipping = cart.products.reduce((sum, p) => sum + p.shipping, 0);
-
-    const totalQty = cart.products.reduce((sum, p) => sum + p.qty, 0);
-    await User.findByIdAndUpdate(userId, { Cartvalue: totalQty });
 
     await cart.save();
 

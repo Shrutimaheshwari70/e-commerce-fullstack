@@ -14,7 +14,7 @@ export default function ShopCategory() {
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const res = await fetch("https://e-com-project-1-db0p.onrender.com/user/getProfile", {
+        const res = await fetch("https://e-com-project-msn4.onrender.com/user/getProfile", {
           method: "GET",
           credentials: "include",
         });
@@ -62,7 +62,7 @@ const addToCart = async (product) => {
   const shippingCost = product.productPrice >= 1000 ? 0 : 50;
 
   try {
-    const res = await fetch("https://e-com-project-1-db0p.onrender.com/cart/add", {
+    const res = await fetch("https://e-com-project-msn4.onrender.com/cart/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

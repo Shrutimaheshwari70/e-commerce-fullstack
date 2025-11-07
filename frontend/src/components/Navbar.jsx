@@ -25,7 +25,7 @@ const [cartt, setCart]= useState(0)
             }
           })
       try {
-        const res = await fetch("https://e-com-project-1-db0p.onrender.com/user/getProfile", {
+        const res = await fetch("https://e-com-project-msn4.onrender.com/user/getProfile", {
           method: "GET",
           credentials: "include", // cookies ke liye
         });

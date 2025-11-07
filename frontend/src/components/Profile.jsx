@@ -38,7 +38,7 @@ function Profile() {
   useEffect(() => {
     async function checkLogin() {
       try {
-        const res = await fetch("https://e-com-project-1-db0p.onrender.com/user/getProfile", {
+        const res = await fetch("https://e-com-project-msn4.onrender.com/user/getProfile", {
           method: "GET",
           credentials: "include",
         });
@@ -91,18 +91,11 @@ function Profile() {
 
     try {
       const res = await fetch("https://e-com-project-msn4.onrender.com/user/signup", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
+        method: "POST",
+        credentials: "include",
+        body: formData,
       });
-      let data;
-      try {
-        data = await res.json();
-      } catch (e) {
-        console.error("Invalid JSON response:", e);
-        alert("Server error: invalid response. Check console.");
-        return;
-      }
+      const data = await res.json();
 
       if (res.status === 201) {
         setLoading(true);
@@ -136,24 +129,17 @@ function Profile() {
     }
 
     try {
-      const res = await fetch("https://e-com-project-1-db0p.onrender.com/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-      userName: form.userName,
-      password: form.password,
-      }),
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          userName: form.userName,
+          password: form.password,
+        }),
       });
 
-      let data;
-      try {
-        data = await res.json();
-      } catch (e) {
-        console.error("Invalid JSON response:", e);
-        alert("Server error: invalid response. Check console.");
-        return;
-      }
+      const data = await res.json();
       if (res.ok) {
         setAttempts(0);
         setIsLoggedIn(true);
@@ -168,7 +154,7 @@ function Profile() {
         }
 
         const profileRes = await fetch(
-        "https://e-com-project-1-db0p.onrender.com/user/getProfile",
+          "https://e-com-project-msn4.onrender.com/user/getProfile",
           {
             method: "GET",
             credentials: "include",
@@ -212,7 +198,7 @@ function Profile() {
   
   const handleLogout = async () => {
     try {
-      const res = await fetch("https://e-com-project-1-db0p.onrender.com/user/logout", {
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -256,7 +242,7 @@ function Profile() {
     if (editForm.picture) updatedForm.append("picture", editForm.picture);
 
     try {
-      const res = await fetch("https://e-com-project-1-db0p.onrender.com/user/updateProfile", {
+      const res = await fetch("https://e-com-project-msn4.onrender.com/user/updateProfile", {
         method: "PUT",
         credentials: "include",
         body: updatedForm,
