@@ -236,7 +236,7 @@ export default function Cart() {
 
 async function deleteAdd(id) {
   try {
-    const res = await fetch(`http://localhost:5000/api/delete/${id}`, {
+    const res = await fetch(`https://e-com-project-msn4.onrender.com/address/delete/${id}`, {
       method: "DELETE",
     });
 
