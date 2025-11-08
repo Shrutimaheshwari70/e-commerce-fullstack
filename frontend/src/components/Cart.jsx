@@ -234,6 +234,25 @@ export default function Cart() {
     navigate("/checkout", { state: { cart, selectedAddress } });
   }
 
+async function deleteAdd(id) {
+  try {
+    const res = await fetch(`http://localhost:5000/api/delete/${id}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      alert("Item deleted successfully!");
+
+      window.location.reload();
+    } else {
+      alert("Failed to delete item!");
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    alert("Something went wrong!");
+  }
+}
+
   return (
     <div style={{ padding: "20px" }}>
       {
@@ -279,8 +298,9 @@ export default function Cart() {
                       selectedAddress?._id === addr._id ? "#e8f5e9" : "white",
                   }}
                 >
-                  <button>delete address</button>
+             
                   <strong>{addr.fullName}</strong>{" "}
+                       <button onClick={()=>deleteAdd(addr._id)}>delete address</button>
                   {addr.isDefault && (
                     <span style={{ color: "green", fontSize: "12px" }}>
                       (Default)
