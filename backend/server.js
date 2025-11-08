@@ -19,13 +19,15 @@ connection(process.env.mongodb_uri);
 
 const app = express();
 
-// ✅ Proper CORS config:
+
 app.use(
   cors({
-    origin: "https://e-com-project-1-db0p.onrender.com", // frontend origin
-    credentials: true, // allow cookies
+    origin: "https://e-com-project-1-db0p.onrender.com",
+    credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
+     preflightContinue: false,
+    optionsSuccessStatus: 204,
   })
 );
 
