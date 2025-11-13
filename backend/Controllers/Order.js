@@ -48,7 +48,7 @@ export async function addOrder(req, res) {
 
     await Cart.findOneAndDelete({ userId: decoded.id });
 
-    // Update user's Cartvalue to 0
+ 
     await User.findByIdAndUpdate(decoded.id, { Cartvalue: 0 });
 
     res.status(201).json({ message: "Order placed successfully", order });
