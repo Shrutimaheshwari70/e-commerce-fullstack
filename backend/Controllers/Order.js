@@ -1,6 +1,7 @@
 import Order from "../Schemas/OrderSchema.js";
 import Product from "../Schemas/ProductSchema.js";
 import Cart from "../Schemas/Cart.js";
+import User from "../Schemas/UserSchema.js";
 import jwt from "jsonwebtoken";
 
 export async function addOrder(req, res) {
@@ -10,7 +11,7 @@ export async function addOrder(req, res) {
 
     const decoded = jwt.verify(token, process.env.secret_key);
 
-    const { products, totalAmount, deliveryAddress } = req.body;
+    const { products, totalAmount, deliveryAddress, paymentMode, customerNumber } = req.body;
 
     if (!deliveryAddress) {
       return res.status(400).json({ message: "Delivery address is required" });
@@ -38,12 +39,17 @@ export async function addOrder(req, res) {
       userId: decoded.id,
       products,
       totalAmount,
+      paymentMode,
+      customerNumber,
       deliveryAddress,
     });
 
     await order.save();
 
     await Cart.findOneAndDelete({ userId: decoded.id });
+
+ 
+    await User.findByIdAndUpdate(decoded.id, { Cartvalue: 0 });
 
     res.status(201).json({ message: "Order placed successfully", order });
   } catch (error) {

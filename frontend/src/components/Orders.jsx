@@ -5,7 +5,7 @@
         async function getData(){
 
         
-let res= await fetch("http://localhost:3000/order/getOrder")
+let res= await fetch("https://e-com-project-msn4.onrender.com/order/getOrder")
 let data = await res.json()
 if(res.status=== 500){
     alert(data.message)

@@ -24,7 +24,7 @@ export async function addAddress(req, res) {
       userId,
       phone,
       verified: true,
-      expiresAt: { $gt: new Date() }
+     
     }); //otp
 
     if (!verifiedOTP) {
@@ -98,7 +98,7 @@ export async function updateAddress(req, res) {
 export async function deleteAddress(req, res) {
   try {
     const userId = req.user._id;
-    const { id } = req.params;
+    const { id } = req.params; // konsa address 
 
     const address = await Address.findOneAndDelete({ _id: id, userId });
     if (!address) {
