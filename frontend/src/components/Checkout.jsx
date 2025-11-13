@@ -83,7 +83,7 @@ export default function Checkout() {
     >
       <h2 style={{ textAlign: "center", marginBottom: "30px" }}>🛒 Checkout</h2>
 
-      {/* Address */}
+
       <section style={sectionStyle}>
         <h3 style={headingStyle}>Delivery Address</h3>
         <p><strong>{selectedAddress.fullName}</strong></p>
@@ -95,7 +95,7 @@ export default function Checkout() {
         <p>{selectedAddress.city}, {selectedAddress.state} - {selectedAddress.zipCode}</p>
       </section>
 
-      {/* Summary */}
+
       <section style={sectionStyle}>
         <h3 style={headingStyle}>Order Summary</h3>
         {cart.products.map((p, idx) => (
@@ -113,7 +113,7 @@ export default function Checkout() {
         </p>
       </section>
 
-      {/* Payment */}
+
       <section style={sectionStyle}>
         <h3 style={headingStyle}>Payment Mode</h3>
         <label style={radioLabel}>
@@ -136,7 +136,7 @@ export default function Checkout() {
         </label>
       </section>
 
-      {/* Terms */}
+
       <section style={sectionStyle}>
         <h3 style={headingStyle}>Terms & Conditions</h3>
         <p>Beyond 7 days you can't exchange and no return possible.</p>

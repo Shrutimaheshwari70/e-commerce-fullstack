@@ -1,7 +1,6 @@
  import Razorpay from "razorpay";
-import dotenv from "dotenv";
-import crypto from "crypto";
-dotenv.config();
+ import crypto from "crypto";
+
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
